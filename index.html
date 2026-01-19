@@ -10,13 +10,9 @@
     <style>
         :root {
             --color-bg: #0a0a0a;
-            --color-surface: #141414;
-            --color-card: #1a1a1a;
             --color-text: #f5f5f0;
             --color-text-muted: #8a8a85;
             --color-accent: #c9a96e;
-            --color-accent-soft: rgba(201, 169, 110, 0.15);
-            --color-border: rgba(201, 169, 110, 0.2);
             --font-display: 'Cormorant Garamond', serif;
             --font-body: 'Outfit', sans-serif;
         }
@@ -25,10 +21,6 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
         }
 
         body {
@@ -40,17 +32,13 @@
             position: relative;
         }
 
-        .bg-gradient {
+        .bg-canvas {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: 
-                radial-gradient(ellipse at 20% 20%, rgba(201, 169, 110, 0.08) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 80%, rgba(201, 169, 110, 0.05) 0%, transparent 50%),
-                radial-gradient(ellipse at 50% 50%, rgba(30, 30, 30, 1) 0%, var(--color-bg) 70%);
-            z-index: -1;
+            z-index: 0;
         }
 
         .grain {
@@ -66,7 +54,7 @@
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 0 2rem;
             position: relative;
@@ -74,114 +62,155 @@
         }
 
         header {
-            padding: 3rem 0;
+            padding: 4rem 0 2rem;
             text-align: center;
-            animation: fadeIn 1s ease-out;
+            animation: fadeIn 1.2s ease-out;
         }
 
-        .logo-wrapper {
-            display: inline-block;
-            position: relative;
-        }
-
-        .logo-line {
-            width: 60px;
-            height: 1px;
+        .logo-ornament {
+            width: 120px;
+            height: 2px;
             background: linear-gradient(90deg, transparent, var(--color-accent), transparent);
-            margin: 0 auto 1.5rem;
-            animation: expandLine 1.2s ease-out 0.3s both;
+            margin: 0 auto 2rem;
+            position: relative;
+            animation: expandOrnament 1.5s ease-out 0.3s both;
         }
 
-        @keyframes expandLine {
+        .logo-ornament::before,
+        .logo-ornament::after {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: var(--color-accent);
+            border-radius: 50%;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .logo-ornament::before {
+            left: -4px;
+        }
+
+        .logo-ornament::after {
+            right: -4px;
+        }
+
+        @keyframes expandOrnament {
             from { width: 0; opacity: 0; }
-            to { width: 60px; opacity: 1; }
+            to { width: 120px; opacity: 1; }
         }
 
         .brand {
             font-family: var(--font-display);
-            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-size: clamp(3rem, 8vw, 5.5rem);
             font-weight: 300;
-            letter-spacing: 0.15em;
+            letter-spacing: 0.2em;
             text-transform: uppercase;
             color: var(--color-text);
-            margin-bottom: 0.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 60px rgba(201, 169, 110, 0.3);
         }
 
         .brand span {
             color: var(--color-accent);
+            display: inline-block;
+            animation: glow 3s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { text-shadow: 0 0 20px rgba(201, 169, 110, 0.5); }
+            50% { text-shadow: 0 0 40px rgba(201, 169, 110, 0.8); }
         }
 
         .tagline {
-            font-size: 0.85rem;
+            font-size: 0.95rem;
             font-weight: 300;
-            letter-spacing: 0.3em;
+            letter-spacing: 0.4em;
             text-transform: uppercase;
             color: var(--color-text-muted);
             margin-top: 1rem;
         }
 
         main {
-            padding: 4rem 0 6rem;
+            padding: 5rem 0 8rem;
         }
 
         .section-title {
             font-family: var(--font-display);
-            font-size: 1.1rem;
+            font-size: 1.3rem;
             font-weight: 400;
-            letter-spacing: 0.2em;
+            letter-spacing: 0.25em;
             text-transform: uppercase;
             color: var(--color-accent);
             text-align: center;
-            margin-bottom: 3rem;
-            animation: fadeIn 1s ease-out 0.5s both;
+            margin-bottom: 5rem;
+            animation: fadeIn 1.2s ease-out 0.6s both;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -1.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 1px;
+            background: var(--color-accent);
+            opacity: 0.4;
         }
 
         .tools-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            max-width: 1000px;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 3rem;
+            max-width: 1200px;
             margin: 0 auto;
+            perspective: 1000px;
         }
 
         .tool-card {
             position: relative;
-            background: var(--color-card);
-            border: 1px solid var(--color-border);
-            border-radius: 2px;
-            padding: 2.5rem 2rem;
+            background: linear-gradient(135deg, rgba(26, 26, 26, 0.95) 0%, rgba(20, 20, 20, 0.9) 100%);
+            border: 1px solid rgba(201, 169, 110, 0.15);
+            border-radius: 4px;
+            padding: 3.5rem 2.5rem;
             text-decoration: none;
             color: var(--color-text);
-            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
             overflow: hidden;
-            animation: slideUp 0.8s ease-out both;
+            animation: slideUp 1s ease-out both;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
 
-        .tool-card:nth-child(1) { animation-delay: 0.6s; }
-        .tool-card:nth-child(2) { animation-delay: 0.75s; }
-        .tool-card:nth-child(3) { animation-delay: 0.9s; }
+        .tool-card:nth-child(1) { animation-delay: 0.8s; }
+        .tool-card:nth-child(2) { animation-delay: 1s; }
+        .tool-card:nth-child(3) { animation-delay: 1.2s; }
 
         @keyframes slideUp {
             from {
                 opacity: 0;
-                transform: translateY(40px);
+                transform: translateY(60px) rotateX(10deg);
             }
             to {
                 opacity: 1;
-                transform: translateY(0);
+                transform: translateY(0) rotateX(0);
             }
         }
 
         .tool-card::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, var(--color-accent-soft) 0%, transparent 60%);
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(201, 169, 110, 0.15) 0%, transparent 70%);
             opacity: 0;
-            transition: opacity 0.5s ease;
+            transition: opacity 0.6s ease;
+            transform: scale(0);
         }
 
         .tool-card::after {
@@ -189,69 +218,131 @@
             position: absolute;
             top: 0;
             left: 0;
-            width: 3px;
-            height: 0;
-            background: var(--color-accent);
-            transition: height 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(201, 169, 110, 0.1) 0%, transparent 50%);
+            opacity: 0;
+            transition: opacity 0.6s ease;
         }
 
         .tool-card:hover {
-            transform: translateY(-8px);
+            transform: translateY(-12px) scale(1.02);
             border-color: var(--color-accent);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4), 0 0 40px rgba(201, 169, 110, 0.1);
+            box-shadow: 
+                0 30px 80px rgba(0, 0, 0, 0.5), 
+                0 0 60px rgba(201, 169, 110, 0.2),
+                inset 0 0 40px rgba(201, 169, 110, 0.05);
         }
 
         .tool-card:hover::before {
             opacity: 1;
+            transform: scale(1);
         }
 
         .tool-card:hover::after {
+            opacity: 1;
+        }
+
+        .card-glow {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 0;
+            background: linear-gradient(180deg, var(--color-accent), transparent);
+            transition: height 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            box-shadow: 0 0 20px var(--color-accent);
+        }
+
+        .tool-card:hover .card-glow {
             height: 100%;
         }
 
+        .card-icon-wrapper {
+            position: relative;
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card-icon-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(201, 169, 110, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            transition: all 0.6s ease;
+            opacity: 0;
+        }
+
+        .tool-card:hover .card-icon-bg {
+            opacity: 1;
+            transform: scale(1.3);
+        }
+
         .card-icon {
-            width: 48px;
-            height: 48px;
-            margin-bottom: 1.5rem;
+            width: 56px;
+            height: 56px;
             color: var(--color-accent);
-            opacity: 0.9;
-            transition: transform 0.4s ease, opacity 0.3s ease;
+            opacity: 0.85;
+            transition: all 0.5s ease;
+            position: relative;
+            z-index: 1;
+            filter: drop-shadow(0 0 10px rgba(201, 169, 110, 0.3));
         }
 
         .tool-card:hover .card-icon {
-            transform: scale(1.1);
+            transform: scale(1.15) rotateY(360deg);
             opacity: 1;
+            filter: drop-shadow(0 0 20px rgba(201, 169, 110, 0.6));
+        }
+
+        .card-content {
+            text-align: center;
+            position: relative;
+            z-index: 2;
         }
 
         .card-title {
             font-family: var(--font-display);
-            font-size: 1.6rem;
+            font-size: 2rem;
             font-weight: 400;
-            margin-bottom: 0.75rem;
-            letter-spacing: 0.02em;
-            position: relative;
-            z-index: 1;
+            margin-bottom: 1rem;
+            letter-spacing: 0.08em;
+            transition: all 0.4s ease;
+        }
+
+        .tool-card:hover .card-title {
+            color: var(--color-accent);
+            text-shadow: 0 0 20px rgba(201, 169, 110, 0.4);
         }
 
         .card-description {
-            font-size: 0.9rem;
+            font-size: 1rem;
             font-weight: 300;
             color: var(--color-text-muted);
-            line-height: 1.6;
-            position: relative;
-            z-index: 1;
+            line-height: 1.7;
+            transition: color 0.4s ease;
+        }
+
+        .tool-card:hover .card-description {
+            color: #b0b0a8;
         }
 
         .card-arrow {
             position: absolute;
-            bottom: 2rem;
-            right: 2rem;
-            width: 24px;
-            height: 24px;
+            bottom: 2.5rem;
+            right: 2.5rem;
+            width: 28px;
+            height: 28px;
             color: var(--color-accent);
             opacity: 0;
-            transform: translateX(-10px);
-            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            transform: translateX(-15px);
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            filter: drop-shadow(0 0 10px rgba(201, 169, 110, 0.5));
         }
 
         .tool-card:hover .card-arrow {
@@ -261,15 +352,15 @@
 
         footer {
             text-align: center;
-            padding: 3rem 0;
-            border-top: 1px solid var(--color-border);
-            animation: fadeIn 1s ease-out 1.1s both;
+            padding: 4rem 0;
+            border-top: 1px solid rgba(201, 169, 110, 0.15);
+            animation: fadeIn 1.2s ease-out 1.4s both;
         }
 
         .footer-text {
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             color: var(--color-text-muted);
-            letter-spacing: 0.1em;
+            letter-spacing: 0.15em;
         }
 
         .footer-text span {
@@ -287,31 +378,29 @@
             }
 
             header {
-                padding: 2rem 0;
+                padding: 3rem 0 1.5rem;
             }
 
             .tools-grid {
                 grid-template-columns: 1fr;
-                gap: 1.5rem;
+                gap: 2rem;
             }
 
             .tool-card {
-                padding: 2rem 1.5rem;
+                padding: 3rem 2rem;
             }
         }
     </style>
 </head>
 <body>
-    <div class="bg-gradient"></div>
+    <canvas class="bg-canvas" id="bgCanvas"></canvas>
     <div class="grain"></div>
 
     <div class="container">
         <header>
-            <div class="logo-wrapper">
-                <div class="logo-line"></div>
-                <h1 class="brand">Ottica <span>Paoletti</span></h1>
-                <p class="tagline">Strumenti di Analisi</p>
-            </div>
+            <div class="logo-ornament"></div>
+            <h1 class="brand">Ottica <span>Paoletti</span></h1>
+            <p class="tagline">Strumenti di Analisi</p>
         </header>
 
         <main>
@@ -319,39 +408,57 @@
 
             <div class="tools-grid">
                 <a href="http://fidia.otticapaoletti.it" target="_blank" class="tool-card">
-                    <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M9 3h6v3a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1V3z"/>
-                        <path d="M10 7v2a2 2 0 0 0-2 2v6a4 4 0 0 0 8 0v-6a2 2 0 0 0-2-2V7"/>
-                        <path d="M12 21v-2"/>
-                        <circle cx="12" cy="22" r="1"/>
-                    </svg>
-                    <h2 class="card-title">Fidia</h2>
-                    <p class="card-description">Colliri e prodotti per la cura degli occhi.</p>
+                    <div class="card-glow"></div>
+                    <div class="card-icon-wrapper">
+                        <div class="card-icon-bg"></div>
+                        <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M9 3h6v3a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1V3z"/>
+                            <path d="M10 7v2a2 2 0 0 0-2 2v6a4 4 0 0 0 8 0v-6a2 2 0 0 0-2-2V7"/>
+                            <path d="M12 21v-2"/>
+                            <circle cx="12" cy="22" r="1"/>
+                        </svg>
+                    </div>
+                    <div class="card-content">
+                        <h2 class="card-title">Fidia</h2>
+                        <p class="card-description">Colliri e prodotti per la cura degli occhi.</p>
+                    </div>
                     <svg class="card-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M5 12h14M12 5l7 7-7 7"/>
                     </svg>
                 </a>
 
                 <a href="http://soluzioni.otticapaoletti.it" target="_blank" class="tool-card">
-                    <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M12 2C12 2 6 10 6 14a6 6 0 1 0 12 0c0-4-6-12-6-12z"/>
-                        <path d="M10 14a2 2 0 0 0 4 0"/>
-                    </svg>
-                    <h2 class="card-title">Soluzioni</h2>
-                    <p class="card-description">Soluzioni per lenti a contatto.</p>
+                    <div class="card-glow"></div>
+                    <div class="card-icon-wrapper">
+                        <div class="card-icon-bg"></div>
+                        <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2C12 2 6 10 6 14a6 6 0 1 0 12 0c0-4-6-12-6-12z"/>
+                            <path d="M10 14a2 2 0 0 0 4 0"/>
+                        </svg>
+                    </div>
+                    <div class="card-content">
+                        <h2 class="card-title">Soluzioni</h2>
+                        <p class="card-description">Soluzioni per lenti a contatto.</p>
+                    </div>
                     <svg class="card-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M5 12h14M12 5l7 7-7 7"/>
                     </svg>
                 </a>
 
                 <a href="http://cooper.otticapaoletti.it" target="_blank" class="tool-card">
-                    <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                        <ellipse cx="12" cy="12" rx="10" ry="4"/>
-                        <path d="M2 12c0 2.5 4.5 6 10 6s10-3.5 10-6"/>
-                        <ellipse cx="12" cy="12" rx="5" ry="2"/>
-                    </svg>
-                    <h2 class="card-title">Cooper</h2>
-                    <p class="card-description">Lenti a contatto.</p>
+                    <div class="card-glow"></div>
+                    <div class="card-icon-wrapper">
+                        <div class="card-icon-bg"></div>
+                        <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <ellipse cx="12" cy="12" rx="10" ry="4"/>
+                            <path d="M2 12c0 2.5 4.5 6 10 6s10-3.5 10-6"/>
+                            <ellipse cx="12" cy="12" rx="5" ry="2"/>
+                        </svg>
+                    </div>
+                    <div class="card-content">
+                        <h2 class="card-title">Cooper</h2>
+                        <p class="card-description">Lenti a contatto.</p>
+                    </div>
                     <svg class="card-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M5 12h14M12 5l7 7-7 7"/>
                     </svg>
@@ -363,5 +470,81 @@
             <p class="footer-text">© 2025 <span>Ottica Paoletti</span> — Tutti i diritti riservati</p>
         </footer>
     </div>
+
+    <script>
+        const canvas = document.getElementById('bgCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const particles = [];
+        const particleCount = 50;
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.vx = (Math.random() - 0.5) * 0.3;
+                this.vy = (Math.random() - 0.5) * 0.3;
+                this.size = Math.random() * 2 + 0.5;
+                this.opacity = Math.random() * 0.5 + 0.2;
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(201, 169, 110, ${this.opacity})`;
+                ctx.fill();
+            }
+        }
+
+        for (let i = 0; i < particleCount; i++) {
+            particles.push(new Particle());
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+
+            particles.forEach((p1, i) => {
+                particles.slice(i + 1).forEach(p2 => {
+                    const dx = p1.x - p2.x;
+                    const dy = p1.y - p2.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist < 150) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = `rgba(201, 169, 110, ${0.15 * (1 - dist / 150)})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.moveTo(p1.x, p1.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        ctx.stroke();
+                    }
+                });
+            });
+
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
 </body>
 </html>
