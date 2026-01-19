@@ -53,6 +53,17 @@
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
 
+        .spotlight {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(201, 169, 110, 0.15) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 50;
+            transition: transform 0.1s ease-out;
+            mix-blend-mode: screen;
+        }
+
         .container {
             max-width: 1400px;
             margin: 0 auto;
@@ -62,54 +73,112 @@
         }
 
         header {
-            padding: 5rem 0 3rem;
+            padding: 6rem 0 4rem;
             text-align: center;
-            animation: fadeIn 1.2s ease-out;
+            animation: fadeIn 1.5s ease-out;
+            position: relative;
+        }
+
+        .hero-rays {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 800px;
+            height: 800px;
+            opacity: 0;
+            animation: raysAppear 2s ease-out 0.5s forwards;
+        }
+
+        @keyframes raysAppear {
+            to { opacity: 0.15; }
+        }
+
+        .ray {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 2px;
+            height: 400px;
+            background: linear-gradient(180deg, var(--color-accent), transparent);
+            transform-origin: top center;
+            opacity: 0.3;
         }
 
         .logo-ornament {
-            width: 120px;
+            width: 140px;
             height: 2px;
             background: linear-gradient(90deg, transparent, var(--color-accent), transparent);
-            margin: 0 auto 2rem;
+            margin: 0 auto 2.5rem;
             position: relative;
-            animation: expandOrnament 1.5s ease-out 0.3s both;
+            animation: expandOrnament 2s ease-out 0.5s both;
+            box-shadow: 0 0 20px rgba(201, 169, 110, 0.5);
         }
 
         .logo-ornament::before,
         .logo-ornament::after {
             content: '';
             position: absolute;
-            width: 8px;
-            height: 8px;
+            width: 10px;
+            height: 10px;
             background: var(--color-accent);
             border-radius: 50%;
             top: 50%;
             transform: translateY(-50%);
+            box-shadow: 0 0 15px var(--color-accent);
+            animation: pulse 2s ease-in-out infinite;
         }
 
         .logo-ornament::before {
-            left: -4px;
+            left: -5px;
         }
 
         .logo-ornament::after {
-            right: -4px;
+            right: -5px;
+            animation-delay: 0.5s;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 15px var(--color-accent); }
+            50% { box-shadow: 0 0 30px var(--color-accent); }
         }
 
         @keyframes expandOrnament {
             from { width: 0; opacity: 0; }
-            to { width: 120px; opacity: 1; }
+            to { width: 140px; opacity: 1; }
         }
 
         .brand {
             font-family: var(--font-display);
-            font-size: clamp(3rem, 8vw, 5.5rem);
+            font-size: clamp(3.5rem, 10vw, 7rem);
             font-weight: 300;
-            letter-spacing: 0.2em;
+            letter-spacing: 0.25em;
             text-transform: uppercase;
             color: var(--color-text);
             margin-bottom: 1rem;
-            text-shadow: 0 0 60px rgba(201, 169, 110, 0.3);
+            text-shadow: 0 0 80px rgba(201, 169, 110, 0.4);
+            position: relative;
+            display: inline-block;
+        }
+
+        .brand::before {
+            content: attr(data-text);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, var(--color-accent), transparent);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            opacity: 0;
+            animation: shimmer 3s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { opacity: 0; transform: translateX(-100%); }
+            50% { opacity: 0.5; transform: translateX(100%); }
         }
 
         .brand span {
@@ -119,98 +188,74 @@
         }
 
         @keyframes glow {
-            0%, 100% { text-shadow: 0 0 20px rgba(201, 169, 110, 0.5); }
-            50% { text-shadow: 0 0 40px rgba(201, 169, 110, 0.8); }
-        }
-
-        .tagline {
-            font-size: 0.95rem;
-            font-weight: 300;
-            letter-spacing: 0.4em;
-            text-transform: uppercase;
-            color: var(--color-text-muted);
-            margin-top: 1rem;
+            0%, 100% { 
+                text-shadow: 0 0 20px rgba(201, 169, 110, 0.5),
+                             0 0 40px rgba(201, 169, 110, 0.3);
+            }
+            50% { 
+                text-shadow: 0 0 40px rgba(201, 169, 110, 0.8),
+                             0 0 80px rgba(201, 169, 110, 0.5),
+                             0 0 120px rgba(201, 169, 110, 0.3);
+            }
         }
 
         main {
-            padding: 3rem 0 8rem;
-        }
-
-        .section-title {
-            font-family: var(--font-display);
-            font-size: 1.3rem;
-            font-weight: 400;
-            letter-spacing: 0.25em;
-            text-transform: uppercase;
-            color: var(--color-accent);
-            text-align: center;
-            margin-bottom: 5rem;
-            animation: fadeIn 1.2s ease-out 0.6s both;
-            position: relative;
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -1.5rem;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60px;
-            height: 1px;
-            background: var(--color-accent);
-            opacity: 0.4;
+            padding: 4rem 0 8rem;
+            perspective: 2000px;
         }
 
         .tools-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-            gap: 3rem;
+            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+            gap: 3.5rem;
             max-width: 1200px;
             margin: 0 auto;
-            perspective: 1000px;
         }
 
         .tool-card {
             position: relative;
-            background: linear-gradient(135deg, rgba(26, 26, 26, 0.95) 0%, rgba(20, 20, 20, 0.9) 100%);
-            border: 1px solid rgba(201, 169, 110, 0.15);
-            border-radius: 4px;
-            padding: 3.5rem 2.5rem;
+            background: linear-gradient(135deg, rgba(26, 26, 26, 0.98) 0%, rgba(15, 15, 15, 0.95) 100%);
+            border: 1px solid rgba(201, 169, 110, 0.2);
+            border-radius: 8px;
+            padding: 4rem 3rem;
             text-decoration: none;
             color: var(--color-text);
-            transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
             overflow: hidden;
-            animation: slideUp 1s ease-out both;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            animation: slideUp 1.2s ease-out both;
+            backdrop-filter: blur(20px);
+            box-shadow: 
+                0 10px 40px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(201, 169, 110, 0.1);
+            transform-style: preserve-3d;
         }
 
-        .tool-card:nth-child(1) { animation-delay: 0.8s; }
-        .tool-card:nth-child(2) { animation-delay: 1s; }
-        .tool-card:nth-child(3) { animation-delay: 1.2s; }
+        .tool-card:nth-child(1) { animation-delay: 1s; }
+        .tool-card:nth-child(2) { animation-delay: 1.2s; }
+        .tool-card:nth-child(3) { animation-delay: 1.4s; }
 
         @keyframes slideUp {
             from {
                 opacity: 0;
-                transform: translateY(60px) rotateX(10deg);
+                transform: translateY(80px) rotateX(20deg) scale(0.9);
             }
             to {
                 opacity: 1;
-                transform: translateY(0) rotateX(0);
+                transform: translateY(0) rotateX(0) scale(1);
             }
         }
 
         .tool-card::before {
             content: '';
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(201, 169, 110, 0.15) 0%, transparent 70%);
+            top: -100%;
+            left: -100%;
+            width: 300%;
+            height: 300%;
+            background: radial-gradient(circle at center, rgba(201, 169, 110, 0.2) 0%, transparent 60%);
             opacity: 0;
-            transition: opacity 0.6s ease;
-            transform: scale(0);
+            transition: all 0.8s ease;
+            pointer-events: none;
         }
 
         .tool-card::after {
@@ -220,84 +265,136 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, rgba(201, 169, 110, 0.1) 0%, transparent 50%);
+            background: linear-gradient(135deg, rgba(201, 169, 110, 0.15) 0%, transparent 60%);
             opacity: 0;
-            transition: opacity 0.6s ease;
+            transition: opacity 0.8s ease;
         }
 
         .tool-card:hover {
-            transform: translateY(-12px) scale(1.02);
             border-color: var(--color-accent);
             box-shadow: 
-                0 30px 80px rgba(0, 0, 0, 0.5), 
-                0 0 60px rgba(201, 169, 110, 0.2),
-                inset 0 0 40px rgba(201, 169, 110, 0.05);
+                0 40px 100px rgba(0, 0, 0, 0.6), 
+                0 0 80px rgba(201, 169, 110, 0.3),
+                inset 0 1px 0 rgba(201, 169, 110, 0.3),
+                inset 0 0 60px rgba(201, 169, 110, 0.05);
         }
 
         .tool-card:hover::before {
             opacity: 1;
-            transform: scale(1);
         }
 
         .tool-card:hover::after {
             opacity: 1;
         }
 
-        .card-glow {
+        .card-glow-top {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--color-accent), transparent);
+            transform: scaleX(0);
+            transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+            box-shadow: 0 0 20px var(--color-accent);
+        }
+
+        .tool-card:hover .card-glow-top {
+            transform: scaleX(1);
+        }
+
+        .card-glow-side {
             position: absolute;
             top: 0;
             left: 0;
             width: 3px;
             height: 0;
             background: linear-gradient(180deg, var(--color-accent), transparent);
-            transition: height 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            transition: height 0.8s cubic-bezier(0.23, 1, 0.32, 1) 0.2s;
             box-shadow: 0 0 20px var(--color-accent);
         }
 
-        .tool-card:hover .card-glow {
+        .tool-card:hover .card-glow-side {
             height: 100%;
+        }
+
+        .card-shine {
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+            transform: translateX(-100%);
+            transition: transform 1s ease;
+        }
+
+        .tool-card:hover .card-shine {
+            transform: translateX(100%);
         }
 
         .card-icon-wrapper {
             position: relative;
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 2rem;
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 2.5rem;
             display: flex;
             align-items: center;
             justify-content: center;
+        }
+
+        .card-icon-ring {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 2px solid rgba(201, 169, 110, 0.3);
+            border-radius: 50%;
+            animation: rotate 20s linear infinite;
+        }
+
+        .card-icon-ring:nth-child(2) {
+            width: 80%;
+            height: 80%;
+            animation-duration: 15s;
+            animation-direction: reverse;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
 
         .card-icon-bg {
             position: absolute;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle, rgba(201, 169, 110, 0.1) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(201, 169, 110, 0.15) 0%, transparent 70%);
             border-radius: 50%;
-            transition: all 0.6s ease;
+            transition: all 0.8s ease;
             opacity: 0;
         }
 
         .tool-card:hover .card-icon-bg {
             opacity: 1;
-            transform: scale(1.3);
+            transform: scale(1.5);
+            box-shadow: 0 0 60px rgba(201, 169, 110, 0.4);
         }
 
         .card-icon {
-            width: 56px;
-            height: 56px;
+            width: 64px;
+            height: 64px;
             color: var(--color-accent);
-            opacity: 0.85;
-            transition: all 0.5s ease;
+            opacity: 0.9;
+            transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
             position: relative;
             z-index: 1;
-            filter: drop-shadow(0 0 10px rgba(201, 169, 110, 0.3));
+            filter: drop-shadow(0 0 15px rgba(201, 169, 110, 0.4));
         }
 
         .tool-card:hover .card-icon {
-            transform: scale(1.15) rotateY(360deg);
+            transform: scale(1.2) rotateY(360deg);
             opacity: 1;
-            filter: drop-shadow(0 0 20px rgba(201, 169, 110, 0.6));
+            filter: drop-shadow(0 0 30px rgba(201, 169, 110, 0.8));
         }
 
         .card-content {
@@ -308,53 +405,74 @@
 
         .card-title {
             font-family: var(--font-display);
-            font-size: 2rem;
+            font-size: 2.2rem;
             font-weight: 400;
-            margin-bottom: 1rem;
-            letter-spacing: 0.08em;
-            transition: all 0.4s ease;
+            margin-bottom: 1.2rem;
+            letter-spacing: 0.1em;
+            transition: all 0.6s ease;
+            position: relative;
+        }
+
+        .card-title::after {
+            content: '';
+            position: absolute;
+            bottom: -0.5rem;
+            left: 50%;
+            transform: translateX(-50%) scaleX(0);
+            width: 60px;
+            height: 2px;
+            background: var(--color-accent);
+            transition: transform 0.6s ease;
+            box-shadow: 0 0 10px var(--color-accent);
         }
 
         .tool-card:hover .card-title {
             color: var(--color-accent);
-            text-shadow: 0 0 20px rgba(201, 169, 110, 0.4);
+            text-shadow: 0 0 30px rgba(201, 169, 110, 0.5);
+            transform: translateY(-5px);
+        }
+
+        .tool-card:hover .card-title::after {
+            transform: translateX(-50%) scaleX(1);
         }
 
         .card-description {
-            font-size: 1rem;
+            font-size: 1.05rem;
             font-weight: 300;
             color: var(--color-text-muted);
-            line-height: 1.7;
-            transition: color 0.4s ease;
+            line-height: 1.8;
+            transition: all 0.6s ease;
         }
 
         .tool-card:hover .card-description {
-            color: #b0b0a8;
+            color: #c0c0b8;
+            transform: translateY(-5px);
         }
 
         .card-arrow {
             position: absolute;
-            bottom: 2.5rem;
-            right: 2.5rem;
-            width: 28px;
-            height: 28px;
+            bottom: 3rem;
+            right: 3rem;
+            width: 32px;
+            height: 32px;
             color: var(--color-accent);
             opacity: 0;
-            transform: translateX(-15px);
-            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-            filter: drop-shadow(0 0 10px rgba(201, 169, 110, 0.5));
+            transform: translateX(-20px) rotate(-45deg);
+            transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            filter: drop-shadow(0 0 15px rgba(201, 169, 110, 0.6));
         }
 
         .tool-card:hover .card-arrow {
             opacity: 1;
-            transform: translateX(0);
+            transform: translateX(0) rotate(0deg);
         }
 
         footer {
             text-align: center;
             padding: 4rem 0;
             border-top: 1px solid rgba(201, 169, 110, 0.15);
-            animation: fadeIn 1.2s ease-out 1.4s both;
+            animation: fadeIn 1.5s ease-out 1.6s both;
+            position: relative;
         }
 
         .footer-text {
@@ -365,6 +483,7 @@
 
         .footer-text span {
             color: var(--color-accent);
+            text-shadow: 0 0 10px rgba(201, 169, 110, 0.3);
         }
 
         @keyframes fadeIn {
@@ -378,16 +497,20 @@
             }
 
             header {
-                padding: 3rem 0 1.5rem;
+                padding: 4rem 0 2rem;
             }
 
             .tools-grid {
                 grid-template-columns: 1fr;
-                gap: 2rem;
+                gap: 2.5rem;
             }
 
             .tool-card {
                 padding: 3rem 2rem;
+            }
+
+            .brand {
+                font-size: 3rem;
             }
         }
     </style>
@@ -395,18 +518,24 @@
 <body>
     <canvas class="bg-canvas" id="bgCanvas"></canvas>
     <div class="grain"></div>
+    <div class="spotlight" id="spotlight"></div>
 
     <div class="container">
         <header>
+            <div class="hero-rays" id="heroRays"></div>
             <div class="logo-ornament"></div>
-            <h1 class="brand">Ottica <span>Paoletti</span></h1>
+            <h1 class="brand" data-text="OTTICA PAOLETTI">Ottica <span>Paoletti</span></h1>
         </header>
 
         <main>
             <div class="tools-grid">
-                <a href="http://fidia.otticapaoletti.it" target="_blank" class="tool-card">
-                    <div class="card-glow"></div>
+                <a href="http://fidia.otticapaoletti.it" target="_blank" class="tool-card" data-tilt>
+                    <div class="card-glow-top"></div>
+                    <div class="card-glow-side"></div>
+                    <div class="card-shine"></div>
                     <div class="card-icon-wrapper">
+                        <div class="card-icon-ring"></div>
+                        <div class="card-icon-ring"></div>
                         <div class="card-icon-bg"></div>
                         <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M9 3h6v3a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1V3z"/>
@@ -424,9 +553,13 @@
                     </svg>
                 </a>
 
-                <a href="http://soluzioni.otticapaoletti.it" target="_blank" class="tool-card">
-                    <div class="card-glow"></div>
+                <a href="http://soluzioni.otticapaoletti.it" target="_blank" class="tool-card" data-tilt>
+                    <div class="card-glow-top"></div>
+                    <div class="card-glow-side"></div>
+                    <div class="card-shine"></div>
                     <div class="card-icon-wrapper">
+                        <div class="card-icon-ring"></div>
+                        <div class="card-icon-ring"></div>
                         <div class="card-icon-bg"></div>
                         <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M12 2C12 2 6 10 6 14a6 6 0 1 0 12 0c0-4-6-12-6-12z"/>
@@ -442,9 +575,13 @@
                     </svg>
                 </a>
 
-                <a href="http://cooper.otticapaoletti.it" target="_blank" class="tool-card">
-                    <div class="card-glow"></div>
+                <a href="http://cooper.otticapaoletti.it" target="_blank" class="tool-card" data-tilt>
+                    <div class="card-glow-top"></div>
+                    <div class="card-glow-side"></div>
+                    <div class="card-shine"></div>
                     <div class="card-icon-wrapper">
+                        <div class="card-icon-ring"></div>
+                        <div class="card-icon-ring"></div>
                         <div class="card-icon-bg"></div>
                         <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                             <ellipse cx="12" cy="12" rx="10" ry="4"/>
@@ -469,6 +606,7 @@
     </div>
 
     <script>
+        // Canvas background
         const canvas = document.getElementById('bgCanvas');
         const ctx = canvas.getContext('2d');
         
@@ -476,16 +614,17 @@
         canvas.height = window.innerHeight;
 
         const particles = [];
-        const particleCount = 50;
+        const particleCount = 80;
+        const waves = [];
 
         class Particle {
             constructor() {
                 this.x = Math.random() * canvas.width;
                 this.y = Math.random() * canvas.height;
-                this.vx = (Math.random() - 0.5) * 0.3;
-                this.vy = (Math.random() - 0.5) * 0.3;
-                this.size = Math.random() * 2 + 0.5;
-                this.opacity = Math.random() * 0.5 + 0.2;
+                this.vx = (Math.random() - 0.5) * 0.5;
+                this.vy = (Math.random() - 0.5) * 0.5;
+                this.size = Math.random() * 2.5 + 0.5;
+                this.opacity = Math.random() * 0.6 + 0.2;
             }
 
             update() {
@@ -499,8 +638,39 @@
             draw() {
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(201, 169, 110, ${this.opacity})`;
+                const gradient = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size * 2);
+                gradient.addColorStop(0, `rgba(201, 169, 110, ${this.opacity})`);
+                gradient.addColorStop(1, 'transparent');
+                ctx.fillStyle = gradient;
                 ctx.fill();
+            }
+        }
+
+        class Wave {
+            constructor(y, speed, amplitude, frequency) {
+                this.y = y;
+                this.speed = speed;
+                this.amplitude = amplitude;
+                this.frequency = frequency;
+                this.offset = 0;
+            }
+
+            update() {
+                this.offset += this.speed;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.moveTo(0, this.y);
+                
+                for (let x = 0; x < canvas.width; x += 5) {
+                    const y = this.y + Math.sin(x * this.frequency + this.offset) * this.amplitude;
+                    ctx.lineTo(x, y);
+                }
+                
+                ctx.strokeStyle = 'rgba(201, 169, 110, 0.08)';
+                ctx.lineWidth = 2;
+                ctx.stroke();
             }
         }
 
@@ -508,8 +678,17 @@
             particles.push(new Particle());
         }
 
+        waves.push(new Wave(canvas.height * 0.3, 0.02, 30, 0.01));
+        waves.push(new Wave(canvas.height * 0.5, 0.015, 40, 0.008));
+        waves.push(new Wave(canvas.height * 0.7, 0.025, 25, 0.012));
+
         function animate() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            waves.forEach(wave => {
+                wave.update();
+                wave.draw();
+            });
 
             particles.forEach(p => {
                 p.update();
@@ -522,10 +701,13 @@
                     const dy = p1.y - p2.y;
                     const dist = Math.sqrt(dx * dx + dy * dy);
 
-                    if (dist < 150) {
+                    if (dist < 180) {
                         ctx.beginPath();
-                        ctx.strokeStyle = `rgba(201, 169, 110, ${0.15 * (1 - dist / 150)})`;
-                        ctx.lineWidth = 0.5;
+                        const gradient = ctx.createLinearGradient(p1.x, p1.y, p2.x, p2.y);
+                        gradient.addColorStop(0, `rgba(201, 169, 110, ${0.2 * (1 - dist / 180)})`);
+                        gradient.addColorStop(1, 'transparent');
+                        ctx.strokeStyle = gradient;
+                        ctx.lineWidth = 1;
                         ctx.moveTo(p1.x, p1.y);
                         ctx.lineTo(p2.x, p2.y);
                         ctx.stroke();
@@ -537,6 +719,43 @@
         }
 
         animate();
+
+        // Hero rays
+        const heroRays = document.getElementById('heroRays');
+        for (let i = 0; i < 12; i++) {
+            const ray = document.createElement('div');
+            ray.className = 'ray';
+            ray.style.transform = `rotate(${i * 30}deg)`;
+            heroRays.appendChild(ray);
+        }
+
+        // Spotlight effect
+        const spotlight = document.getElementById('spotlight');
+        document.addEventListener('mousemove', (e) => {
+            spotlight.style.transform = `translate(${e.clientX - 300}px, ${e.clientY - 300}px)`;
+        });
+
+        // 3D tilt effect
+        const cards = document.querySelectorAll('[data-tilt]');
+        cards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = (y - centerY) / 10;
+                const rotateY = (centerX - x) / 10;
+                
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-12px) scale(1.02)`;
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = '';
+            });
+        });
 
         window.addEventListener('resize', () => {
             canvas.width = window.innerWidth;
