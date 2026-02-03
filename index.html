@@ -73,7 +73,7 @@
         }
 
         header {
-            padding: 6rem 0 4rem;
+            padding: 4rem 0 3rem;
             text-align: center;
             animation: fadeIn 1.5s ease-out;
             position: relative;
@@ -150,7 +150,7 @@
 
         .brand {
             font-family: var(--font-display);
-            font-size: clamp(3.5rem, 10vw, 7rem);
+            font-size: clamp(3.5rem, 10vw, 6rem);
             font-weight: 300;
             letter-spacing: 0.25em;
             text-transform: uppercase;
@@ -200,15 +200,16 @@
         }
 
         main {
-            padding: 4rem 0 8rem;
+            padding: 2rem 0 6rem;
             perspective: 2000px;
         }
 
         .tools-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-            gap: 3.5rem;
-            max-width: 1400px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            max-width: 1600px;
             margin: 0 auto;
         }
 
@@ -217,7 +218,7 @@
             background: linear-gradient(135deg, rgba(26, 26, 26, 0.98) 0%, rgba(15, 15, 15, 0.95) 100%);
             border: 1px solid rgba(201, 169, 110, 0.2);
             border-radius: 8px;
-            padding: 4rem 3rem;
+            padding: 3rem 2.5rem;
             text-decoration: none;
             color: var(--color-text);
             transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
@@ -228,6 +229,8 @@
                 0 10px 40px rgba(0, 0, 0, 0.4),
                 inset 0 1px 0 rgba(201, 169, 110, 0.1);
             transform-style: preserve-3d;
+            width: 280px;
+            flex-shrink: 0;
         }
 
         .tool-card:nth-child(1) { animation-delay: 1s; }
@@ -336,9 +339,9 @@
 
         .card-icon-wrapper {
             position: relative;
-            width: 100px;
-            height: 100px;
-            margin: 0 auto 2.5rem;
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 2rem;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -382,8 +385,8 @@
         }
 
         .card-icon {
-            width: 64px;
-            height: 64px;
+            width: 52px;
+            height: 52px;
             color: var(--color-accent);
             opacity: 0.9;
             transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
@@ -406,9 +409,9 @@
 
         .card-title {
             font-family: var(--font-display);
-            font-size: 2.2rem;
+            font-size: 1.8rem;
             font-weight: 400;
-            margin-bottom: 1.2rem;
+            margin-bottom: 1rem;
             letter-spacing: 0.1em;
             transition: all 0.6s ease;
             position: relative;
@@ -438,10 +441,10 @@
         }
 
         .card-description {
-            font-size: 1.05rem;
+            font-size: 0.95rem;
             font-weight: 300;
             color: var(--color-text-muted);
-            line-height: 1.8;
+            line-height: 1.6;
             transition: all 0.6s ease;
         }
 
@@ -452,10 +455,10 @@
 
         .card-arrow {
             position: absolute;
-            bottom: 3rem;
-            right: 3rem;
-            width: 32px;
-            height: 32px;
+            bottom: 2rem;
+            right: 2rem;
+            width: 28px;
+            height: 28px;
             color: var(--color-accent);
             opacity: 0;
             transform: translateX(-20px) rotate(-45deg);
@@ -498,20 +501,23 @@
             }
 
             header {
-                padding: 4rem 0 2rem;
+                padding: 3rem 0 2rem;
             }
 
             .tools-grid {
-                grid-template-columns: 1fr;
-                gap: 2.5rem;
+                flex-direction: column;
+                align-items: center;
+                gap: 2rem;
             }
 
             .tool-card {
-                padding: 3rem 2rem;
+                width: 100%;
+                max-width: 320px;
+                padding: 2.5rem 2rem;
             }
 
             .brand {
-                font-size: 3rem;
+                font-size: 2.5rem;
             }
         }
     </style>
